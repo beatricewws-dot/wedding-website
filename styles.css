@@ -1,4 +1,5 @@
 :root { --ink: #253b35; --moss: #5d705d; --cream: #f3efe7; --paper: #faf9f5; --terracotta: #c86f50; --line: rgba(37,59,53,.2); --serif: 'Gilda Display', Georgia, serif; --sans: 'DM Sans', sans-serif; }
+.choice input[type="radio"] { accent-color: var(--terracotta); appearance: radio; -webkit-appearance: radio; flex: 0 0 16px; height: 16px; margin: 0; opacity: 1; visibility: visible; width: 16px; }
 .timezone-inline { border-left: 1px solid rgba(200,111,80,.45); border-right: 1px solid rgba(200,111,80,.45); justify-content: center !important; padding-left: 20px; padding-right: 20px; text-align: center; }
 .timezone-inline > span { display: none; margin: 0; }
 .timezone-inline > p { margin: 0 auto !important; max-width: 100%; text-align: center; }
