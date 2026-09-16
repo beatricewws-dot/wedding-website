@@ -7,7 +7,8 @@
 .nav-rsvp span::before, .rsvp-form button span::before, .calendar-link span::before, .venue-note a::after { border-right: 1.5px solid currentColor; border-top: 1.5px solid currentColor; content: ''; height: .42rem; position: absolute; right: 0; top: .2rem; transform: rotate(45deg); width: .42rem; }
 .nav-rsvp span::after, .rsvp-form button span::after, .calendar-link span::after, .venue-note a::before { content: ''; position: absolute; }
 .nav-rsvp span::after, .rsvp-form button span::after, .calendar-link span::after { background: currentColor; height: 1.5px; left: 0; top: .44rem; width: .7rem; }
-.date-ornament, .leaf-mark { background: currentColor; clip-path: polygon(50% 0, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0 50%, 39% 35%); display: inline-block; font-size: 0; height: 2rem; width: 2rem; }
+.date-ornament, .leaf-mark { background: none; display: inline-block; font-size: 0 !important; height: 2rem; line-height: 1; width: 2rem; }
+.date-ornament::before, .leaf-mark::before { content: '*'; display: inline-block; font-family: var(--serif); font-size: 2rem !important; }
 .venue-note a { display: inline-block; font-size: 0 !important; position: relative; }
 .venue-note a::before { content: 'Get directions'; font-size: .8rem; inset: 0 auto auto 0; position: absolute; }
 .venue-note a::after { right: auto; top: .3rem; transform: translateX(5.9rem) rotate(45deg); }
