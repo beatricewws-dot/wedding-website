@@ -1,6 +1,6 @@
 const form = document.querySelector('#rsvp-form');
 const status = document.querySelector('#form-status');
-const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxDMeWNQC_hT1p3hCN6zgAYcY8qRZhya9TdGy8sGYaV6bepvZtGJ0h31ZghZu7JEIzq/exec';
+const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbytFuXJ6PAJqQAE-BLdPC4mpOKGRWKx_Sd_Inam7ttAXZvK8WUOOGgDks3I-XSMjuO3/exec';
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -12,6 +12,7 @@ form.addEventListener('submit', async (event) => {
     attendance: formData.get('attendance'),
     guests: formData.get('guests'),
     dietary: formData.get('dietary').trim(),
+    guestNames: formData.get('guestNames').trim(),
     submittedAt: new Date().toISOString()
   };
 
