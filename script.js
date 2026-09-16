@@ -4,7 +4,21 @@ const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxlxj261
 const attendanceTypeFieldset = document.querySelector('#attendance-type-fieldset');
 const attendanceTypeInputs = attendanceTypeFieldset.querySelectorAll('input');
 const attendanceInputs = form.querySelectorAll('input[name="attendance"]');
+const guestSelect = document.querySelector('#guests');
 attendanceTypeFieldset.disabled = false;
+
+const validateGuestCount = () => {
+  const isAttending = form.querySelector('input[name="attendance"]:checked')?.value === 'yes';
+  const guestCount = Number(guestSelect.value || 0);
+
+  if (isAttending && guestCount < 1) {
+    guestSelect.setCustomValidity('Please select at least 1 guest if attending.');
+    return false;
+  }
+
+  guestSelect.setCustomValidity('');
+  return true;
+};
 
 const calendarDownload = document.querySelector('.calendar-download');
 
@@ -40,8 +54,11 @@ attendanceInputs.forEach((input) => {
       attendanceTypeInput.required = attending;
       if (!attending) attendanceTypeInput.checked = false;
     });
+    validateGuestCount();
   });
 });
+
+guestSelect.addEventListener('change', validateGuestCount);
 
 const submitButton = form.querySelector('button[type="submit"]');
 const otherNotesLabel = document.createElement('label');
@@ -56,6 +73,13 @@ submitButton.before(otherNotesLabel, otherNotesInput);
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
+
+  if (!validateGuestCount()) {
+    status.textContent = 'Please select at least 1 guest if you are attending.';
+    guestSelect.reportValidity();
+    return;
+  }
+
   const formData = new FormData(form);
   const guestName = formData.get('name').trim();
   const response = {
