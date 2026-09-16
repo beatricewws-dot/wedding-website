@@ -4,6 +4,7 @@ const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxlxj261
 const attendanceTypeFieldset = document.querySelector('#attendance-type-fieldset');
 const attendanceTypeInputs = attendanceTypeFieldset.querySelectorAll('input');
 const attendanceInputs = form.querySelectorAll('input[name="attendance"]');
+attendanceTypeFieldset.disabled = false;
 
 const calendarDownload = document.querySelector('.calendar-download');
 
