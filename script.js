@@ -83,6 +83,10 @@ form.addEventListener('submit', async (event) => {
 
     status.textContent = `Thank you, ${guestName}. Your RSVP is on its way to us.`;
     form.reset();
+    const guestSelect = document.querySelector('#guests');
+    if (guestSelect) {
+      guestSelect.value = '0';
+    }
   } catch (error) {
     status.textContent = 'Something went wrong. Please try again or contact us directly.';
   }
