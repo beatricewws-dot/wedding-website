@@ -36,7 +36,6 @@ calendarDownload.addEventListener('click', () => {
 attendanceInputs.forEach((input) => {
   input.addEventListener('change', () => {
     const attending = input.value === 'yes' && input.checked;
-    attendanceTypeFieldset.disabled = !attending;
     attendanceTypeInputs.forEach((attendanceTypeInput) => {
       attendanceTypeInput.required = attending;
       if (!attending) attendanceTypeInput.checked = false;
