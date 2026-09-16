@@ -2,6 +2,33 @@ const form = document.querySelector('#rsvp-form');
 const status = document.querySelector('#form-status');
 const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbytFuXJ6PAJqQAE-BLdPC4mpOKGRWKx_Sd_Inam7ttAXZvK8WUOOGgDks3I-XSMjuO3/exec';
 
+const calendarDownload = document.querySelector('.calendar-download');
+
+calendarDownload.addEventListener('click', () => {
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Freddie and Beatrice//Wedding//EN',
+    'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT',
+    'UID:freddie-beatrice-wedding-20271018@freddieandbeatrice',
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}`,
+    'DTSTART:20271018T050000Z',
+    'DTEND:20271018T100000Z',
+    'SUMMARY:Freddie & Beatrice Wedding',
+    'DESCRIPTION:Ceremony at 4:00 PM, cocktail hour at 5:00 PM, and dinner at 6:30 PM. Times are currently TBC.',
+    'LOCATION:Ancora, 118 Wharf St, Tweed Heads, NSW 2485',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  const file = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const downloadLink = document.createElement('a');
+  downloadLink.href = URL.createObjectURL(file);
+  downloadLink.download = 'freddie-and-beatrice-wedding.ics';
+  downloadLink.click();
+  URL.revokeObjectURL(downloadLink.href);
+});
+
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const formData = new FormData(form);
