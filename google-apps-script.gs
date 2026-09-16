@@ -9,29 +9,39 @@ function doPost(event) {
       "Name",
       "Email",
       "Attendance",
+      "Attendance type",
       "Guests",
       "Dietary notes",
       "Other guest names",
+      "Other notes",
       "Submitted at",
     ];
 
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(headers);
+    } else if (sheet.getRange(1, 4).getValue() === "Guests") {
+      sheet.insertColumnAfter(3);
+      sheet.getRange(1, 4).setValue("Attendance type");
     } else if (sheet.getRange(1, 6).getValue() === "Submitted at") {
       sheet.insertColumnBefore(6);
       sheet.getRange(1, 6).setValue("Other guest names");
     } else if (sheet.getRange(1, 6).getValue() !== "Other guest names") {
       sheet.getRange(1, 6).setValue("Other guest names");
       sheet.getRange(1, 7).setValue("Submitted at");
+    } else if (sheet.getRange(1, 8).getValue() === "Submitted at") {
+      sheet.insertColumnBefore(8);
+      sheet.getRange(1, 8).setValue("Other notes");
     }
 
     var row = [
       data.name || "",
       data.email || "",
       data.attendance || "",
+      data.attendanceType || "",
       data.guests || "",
       data.dietary || "",
       data.guestNames || "",
+      data.otherNotes || "",
       data.submittedAt || new Date().toISOString(),
     ];
     var email = String(data.email || "")
@@ -49,7 +59,7 @@ function doPost(event) {
   }
 
   return ContentService.createTextOutput(
-    JSON.stringify({ success: true })
+    JSON.stringify({ success: true }),
   ).setMimeType(ContentService.MimeType.JSON);
 }
 

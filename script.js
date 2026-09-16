@@ -1,6 +1,9 @@
 const form = document.querySelector('#rsvp-form');
 const status = document.querySelector('#form-status');
-const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbytFuXJ6PAJqQAE-BLdPC4mpOKGRWKx_Sd_Inam7ttAXZvK8WUOOGgDks3I-XSMjuO3/exec';
+const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxlxj261P0s17EjJorIog5elR73ByoCrNvSWjPweqmFjkHzafoD9NoxOuXdMKUjykJI/exec';
+const attendanceTypeFieldset = document.querySelector('#attendance-type-fieldset');
+const attendanceTypeInputs = attendanceTypeFieldset.querySelectorAll('input');
+const attendanceInputs = form.querySelectorAll('input[name="attendance"]');
 
 const calendarDownload = document.querySelector('.calendar-download');
 
@@ -29,6 +32,28 @@ calendarDownload.addEventListener('click', () => {
   URL.revokeObjectURL(downloadLink.href);
 });
 
+attendanceInputs.forEach((input) => {
+  input.addEventListener('change', () => {
+    const attending = input.value === 'yes' && input.checked;
+    attendanceTypeFieldset.disabled = !attending;
+    attendanceTypeInputs.forEach((attendanceTypeInput) => {
+      attendanceTypeInput.required = attending;
+      if (!attending) attendanceTypeInput.checked = false;
+    });
+  });
+});
+
+const submitButton = form.querySelector('button[type="submit"]');
+const otherNotesLabel = document.createElement('label');
+otherNotesLabel.htmlFor = 'other-notes';
+otherNotesLabel.textContent = 'Other notes';
+const otherNotesInput = document.createElement('input');
+otherNotesInput.id = 'other-notes';
+otherNotesInput.name = 'otherNotes';
+otherNotesInput.type = 'text';
+otherNotesInput.placeholder = 'Optional special request';
+submitButton.before(otherNotesLabel, otherNotesInput);
+
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const formData = new FormData(form);
@@ -37,9 +62,11 @@ form.addEventListener('submit', async (event) => {
     name: guestName,
     email: formData.get('email'),
     attendance: formData.get('attendance'),
+    attendanceType: formData.get('attendanceType') || '',
     guests: formData.get('guests'),
     dietary: formData.get('dietary').trim(),
     guestNames: formData.get('guestNames').trim(),
+    otherNotes: formData.get('otherNotes').trim(),
     submittedAt: new Date().toISOString()
   };
 
